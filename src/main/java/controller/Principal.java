@@ -117,7 +117,7 @@ public class Principal {
 //		System.out.println("-------------------------------------------------------------");
 		
 		List<Pessoa> listaPessoa = pessoaDao.listarTodos();
-		System.out.println("-------------------------------------------------");
+		System.out.println("-----Listagem Geral de Pessoas-------------------------------");
 		listaPessoa.forEach(c -> System.out.println(c));
 		System.out.println("-------------------------------------------------------------");
 		
