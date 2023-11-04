@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.ContaDAO;
@@ -11,6 +12,7 @@ import dao.impl.PessoaDAOImpl;
 import model.Conta;
 import model.Endereco;
 import model.Pessoa;
+import model.Telefone;
 
 
 public class Principal {
@@ -54,36 +56,53 @@ public class Principal {
 		
 //-------------------------------------------------------
 		
-		Conta conta  = new Conta();
+		Conta cc  = new Conta();
 		ContaDAO contaDao = new ContaDAOImpl();
-		Endereco endereco = new Endereco();
+		Endereco e = new Endereco();
 		EnderecoDAO enderecoDao = new EnderecoDAOImpl();
-		Pessoa pessoa = new Pessoa();
+		Pessoa p = new Pessoa();
 		PessoaDAO pessoaDao = new PessoaDAOImpl();
 	
 		
-		pessoa.setCpf("02092331410");
-		pessoa.setIdade(35);
-		pessoa.setNome("Maria da Silva");
-		pessoa.setSexo("F");
+		p.setCpf("65092331429");
+		p.setIdade(35);
+		p.setNome("Katarina da Silva");
+		p.setSexo("F");
 		
-		conta.setNumero(1002);
-		conta.setLimite(300d);
-		conta.setSaldo(800d);
-		
-		
-		
-		int end = pessoaDao.pesquisar(pessoa.getCpf()).getEndereco().getId_endereco();
-		endereco.setId_endereco(end);
-		endereco.setRua("Rua 159");
-		endereco.setNumero(40);
-		endereco.setComplemento("Casa");
-		pessoa.setConta(conta);
-		pessoa.setEndereco(endereco);
+		cc.setNumero(1007);
+		cc.setLimite(600d);
+		cc.setSaldo(900d);
 		
 		
-//		pessoaDao.salvar(pessoa);
-		pessoaDao.alterar(pessoa);
+		
+		//int end = pessoaDao.pesquisar(pessoa.getCpf()).getEndereco().getId_endereco();
+		//endereco.setId_endereco(end);
+		e.setRua("Rua oito");
+		e.setNumero(55);
+		e.setComplemento("Apt");
+		
+		p.setConta(cc);
+		p.setEndereco(e);
+		
+//		int end = pessoaDao.pesquisar(p.getCpf()).getEndereco().getId_endereco();
+//		e.setId_endereco(end);
+		
+		Telefone tel1 = new Telefone("81", "978877661", p);
+		Telefone tel2 = new Telefone("81", "978877662", p);
+		Telefone tel3 = new Telefone("81", "978877663", p);
+		Telefone tel4 = new Telefone("81", "978877664", p);
+		List<Telefone> lista = new ArrayList<>();
+		lista.add(tel1);
+		lista.add(tel2);
+		lista.add(tel3);
+		lista.add(tel4);
+		
+		p.setTelefones(lista);
+		
+		
+		pessoaDao.salvar(p);
+//		pessoaDao.remover(pessoa.getCpf());
+//		pessoaDao.alterar(pessoa);
 				
 		
 		
@@ -118,9 +137,12 @@ public class Principal {
 		
 		List<Pessoa> listaPessoa = pessoaDao.listarTodos();
 		System.out.println("-----Listagem Geral de Pessoas-------------------------------");
-		listaPessoa.forEach(c -> System.out.println(c));
-		System.out.println("-------------------------------------------------------------");
+		System.out.println("CPF			 	NOME	SALDO	ENDERECO					 ");
+		listaPessoa.forEach(c -> System.out.println(c.getCpf() +"\t" +c.getNome()+"\t" +c.getConta().getSaldo()+"\t" +c.getEndereco().getRua()));
 		
+		
+		System.out.println("-------------------------------------------------------------");
+		listaPessoa.forEach(c -> System.out.println(c.toString()));
 	}
 
 }

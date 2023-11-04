@@ -1,9 +1,13 @@
 package model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -17,9 +21,13 @@ public class Pessoa {
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "numero_conta")
 	private Conta conta;
+	
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
+	
+	@OneToMany(mappedBy = "pessoa", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Telefone> telefones;
 	
 	
 	
@@ -73,15 +81,24 @@ public class Pessoa {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+	
+	public void setTelefones(List<Telefone> telefone) {
+		this.telefones = telefone;
+	}
+	
+	public void getTelefones(List<Telefone> telefone) {
+		this.telefones = telefone;
+	}
 
 	@Override
 	public String toString() {
 		return "Pessoa [" + (cpf != null ? "cpf=" + cpf + ", " : "") + (sexo != null ? "sexo=" + sexo + ", " : "")
 				+ "idade=" + idade + ", " + (nome != null ? "nome=" + nome + ", " : "")
-				+ (conta != null ? "conta=" + conta + ", " : "") + (endereco != null ? "endereco=" + endereco : "")
-				+ "]";
+				+ (conta != null ? "conta=" + conta + ", " : "")
+				+ (endereco != null ? "endereco=" + endereco + ", " : "")
+				+ (telefones != null ? "telefones=" + telefones : "") + "]";
 	}
-	
+
 	
 
 }

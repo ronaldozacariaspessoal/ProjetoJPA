@@ -103,7 +103,7 @@ public class EnderecoDAOImpl implements EnderecoDAO{
 	@Override
 	public List<Endereco> listarTodos() {
 		this.em = JpaUtil.getEntityManager();
-		Query query = em.createQuery("from Endereco e");
+		Query query = em.createQuery("from Endereco e order by e.id");
 		List<Endereco> listaEndereco = query.getResultList();
 		em.close();
 		return listaEndereco;
